@@ -36,12 +36,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.content);
-
-//		final Handler handler = new Handler();
 		myhander = new MyHandler();
 		mythread = new MyThread();// 实例化
-
-		// foundDevice=(ImageView)findViewById(R.id.foundDevice);
 		ImageView button = (ImageView) findViewById(R.id.centerImage);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -50,25 +46,18 @@ public class MainActivity extends Activity {
 				if (!isStart) {
 					rippleBackground.startRippleAnimation();
 					Toast.makeText(getApplicationContext(),
-							"WifiScanner is running!", Toast.LENGTH_SHORT)
-							.show();
+					"WifiScanner is running!", Toast.LENGTH_SHORT).show();
 					isStart = true;
 					mythread.stop = false;
 					new Thread(mythread).start(); // 开启线程
 				} else {
 					Toast.makeText(getApplicationContext(),
-							"WifiScanner stops!", Toast.LENGTH_SHORT).show();
+					"WifiScanner stops!", Toast.LENGTH_SHORT).show();
 					rippleBackground.stopRippleAnimation();
 					mythread.stop = true;
 					isStart = false;
 
 				}
-
-				/*
-				 * handler.postDelayed(new Runnable() {
-				 * 
-				 * @Override public void run() { foundDevice(); } },3000);
-				 */
 			}
 		});
 	}
@@ -96,7 +85,6 @@ public class MainActivity extends Activity {
 
 		public void handleMessage(Message msg) {
 			file_name_count++;
-
 			if (msg.what == -2) {
 				Toast.makeText(MainActivity.this, "请检查Wifi网络的状态",
 						Toast.LENGTH_SHORT).show();
@@ -126,6 +114,7 @@ public class MainActivity extends Activity {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.dismiss();
+								//isStart = false;
 								// TODO Auto-generated method stub
 
 							}
@@ -140,7 +129,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	// public int pre_result=1;
+	//public int pre_result=1;
 	public class MyThread implements Runnable {
 		volatile boolean stop = false;
 		Wifi_Result wifi_s = new Wifi_Result();
@@ -154,27 +143,12 @@ public class MainActivity extends Activity {
 				try {
 					int result = wifi_s.WifiResult(wm);// 定时执行这个函数
 					Message message = new Message();
-					message.what = result;
+					message.what=result;
 					myhander.sendMessage(message);// 发送数据
-
-					/* */
-
 					Thread.currentThread();
-					Thread.sleep(5000);// 线程每隔1s执行一次
-
-					// 先鉴别这一次和上一次是否一样，一样则不发送信息
-
-					/*
-					 * if(result==pre_result) { message.what=0;
-					 * //message.what=-3; } else {
-					 */
-
-					/* } */
-
-					// pre_result=result;
-					/**/
+					Thread.sleep(5000);// 线程每隔5s执行一次
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 
