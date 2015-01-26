@@ -22,10 +22,11 @@ public class Wifi_Result {
 	public static final int WIFI_STATE_ENABLING = 2;// 网卡正在打开
 	public static final int WIFI_STATE_ENABLED = 3;// 网卡可用
 	public static final int WIFI_STATE_UNKNOWN = 4;// 网卡未知状态
-
+	public static final int MAX_FILE_LENGTH=1024*1024;//最大文件长度1M
+	public String filename;
+	
 	public int WifiResult(WifiManager wm) {
 
-		// //log.i("xiaosu","到达1");
 		int i = 0;
 		switch (wm.getWifiState()) {
 		case WIFI_STATE_DISABING:
@@ -44,32 +45,26 @@ public class Wifi_Result {
 
 		}
 		if (wm.getWifiState() == 3) {
-			////log.i("wifistate", String.valueOf(wm.getWifiState()));
 			WifiInfo info = wm.getConnectionInfo();
 			int strength = info.getRssi();
 			int speed = info.getLinkSpeed();
 			String units = WifiInfo.LINK_SPEED_UNITS;
 			String ssid = info.getSSID();
-			////log.i("xiaosu", "到达2");
 			List<ScanResult> results = wm.getScanResults(); // 加检测是否打开wifi
-			String otherwifi = "The existing network is: \n\n";
-			////log.i("xiaosu", "到达3");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
 			String date = sdf.format(new java.util.Date());
-			otherwifi += "The time is :" + date + "\n\n";
-			////log.i("time", String.valueOf(date));
-			//String wifi_txt = "xiaosu.txt";
+			if(filename==null){
+				filename=date+".txt";
+				}
+			String date1=date.replace('_', ':');//文件中的时间
+			
+			String otherwifi = "\n\nThe time is :" + date1 + "\n";
 			for (ScanResult result : results) {
 				otherwifi += result.SSID + ":" + result.BSSID + ":"
 						+ result.level + "\n";
-				////log.i("result", String.valueOf(result));
-			
 			}
-			////log.i("du", "wenjian");
-
 			String status = Environment.getExternalStorageState();
 			String sDir;
-			// File file=new
 			if (status.equals(Environment.MEDIA_MOUNTED)) {
 				sDir = Environment.getExternalStorageDirectory().getPath()
 						+ "/wifi_scanner";
@@ -79,41 +74,32 @@ public class Wifi_Result {
 			}
 
 			File dir = new File(sDir);
-
 			if (!dir.exists()) {
-
 				try {
-
-					// 按照指定的路径创建文件夹
-
-					dir.mkdirs();
-
+					dir.mkdirs();// 按照指定的路径创建文件夹
 				} catch (Exception e) {
 
-					// TODO: handle exception
-
 				}
-
 			}
-
-			File file = new File(sDir, date + ".txt");
-
+			File file=new File(sDir,String.valueOf(filename));
 			if (!file.exists()) {
-
 				try {
-
-					// 在指定的文件夹中创建文件
-
-					file.createNewFile();
+					file.createNewFile();// 在指定的文件夹中创建文件
 
 				} catch (Exception e) {
-
 				}
-
 			}
-
+			else {
+	        	if(file.length()>MAX_FILE_LENGTH) //获取文件大小,单位为bytes 
+	        	filename=date+".txt";
+	        	file=new File(sDir,String.valueOf(filename)); 
+	        	 try { 
+	                  file.createNewFile(); //在指定的文件夹中创建文件 
+	            } catch (Exception e) { 
+	            }
+	        }
 			try {
-				FileOutputStream outputStream = new FileOutputStream(file);
+				FileOutputStream outputStream = new FileOutputStream(file,true);
 				outputStream.write(otherwifi.getBytes());
 				outputStream.close();
 			} catch (FileNotFoundException e) {
@@ -121,8 +107,6 @@ public class Wifi_Result {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			//log.i("xiaosu", "到达4");
 			return 1;
 		} else {
 			return 0;
