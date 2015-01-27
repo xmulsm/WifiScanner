@@ -17,12 +17,12 @@ import android.os.Environment;
 import android.widget.Toast;
 
 public class Wifi_Result {
-	public static final int WIFI_STATE_DISABING = 0;// Íø¿¨¹Ø±ÕÖÐ
-	public static final int WIFI_STATE_DISABLED = 1;// WifiÍø¿¨²»¿ÉÓÃ
-	public static final int WIFI_STATE_ENABLING = 2;// Íø¿¨ÕýÔÚ´ò¿ª
-	public static final int WIFI_STATE_ENABLED = 3;// Íø¿¨¿ÉÓÃ
-	public static final int WIFI_STATE_UNKNOWN = 4;// Íø¿¨Î´Öª×´Ì¬
-	public static final int MAX_FILE_LENGTH=1024*1024;//×î´óÎÄ¼þ³¤¶È1M
+	public static final int WIFI_STATE_DISABING = 0;// ï¿½ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½
+	public static final int WIFI_STATE_DISABLED = 1;// Wifiï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static final int WIFI_STATE_ENABLING = 2;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½
+	public static final int WIFI_STATE_ENABLED = 3;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static final int WIFI_STATE_UNKNOWN = 4;// ï¿½ï¿½ï¿½ï¿½Î´Öª×´Ì¬
+	public static final int MAX_FILE_LENGTH=1024*10;//ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½1M
 	public String filename;
 	
 	public int WifiResult(WifiManager wm) {
@@ -36,11 +36,11 @@ public class Wifi_Result {
 		case WIFI_STATE_ENABLING:
 			return -2;
 		case WIFI_STATE_ENABLED:
-			// wifiÍøÂçÒÑ´ò¿ª
+			// wifiï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 			break;
 		case WIFI_STATE_UNKNOWN:
 			return -6;
-		default:// Î´Öª´íÎó
+		default:// Î´Öªï¿½ï¿½ï¿½ï¿½
 			break;
 
 		}
@@ -50,13 +50,13 @@ public class Wifi_Result {
 			int speed = info.getLinkSpeed();
 			String units = WifiInfo.LINK_SPEED_UNITS;
 			String ssid = info.getSSID();
-			List<ScanResult> results = wm.getScanResults(); // ¼Ó¼ì²âÊÇ·ñ´ò¿ªwifi
+			List<ScanResult> results = wm.getScanResults(); // ï¿½Ó¼ï¿½ï¿½ï¿½Ç·ï¿½ï¿½wifi
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
 			String date = sdf.format(new java.util.Date());
 			if(filename==null){
 				filename=date+".txt";
 				}
-			String date1=date.replace('_', ':');//ÎÄ¼þÖÐµÄÊ±¼ä
+			String date1=date.replace('_', ':');//ï¿½Ä¼ï¿½ï¿½Ðµï¿½Ê±ï¿½ï¿½
 			
 			String otherwifi = "\n\nThe time is :" + date1 + "\n";
 			for (ScanResult result : results) {
@@ -76,7 +76,7 @@ public class Wifi_Result {
 			File dir = new File(sDir);
 			if (!dir.exists()) {
 				try {
-					dir.mkdirs();// °´ÕÕÖ¸¶¨µÄÂ·¾¶´´½¨ÎÄ¼þ¼Ð
+					dir.mkdirs();// ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 				} catch (Exception e) {
 
 				}
@@ -84,17 +84,17 @@ public class Wifi_Result {
 			File file=new File(sDir,String.valueOf(filename));
 			if (!file.exists()) {
 				try {
-					file.createNewFile();// ÔÚÖ¸¶¨µÄÎÄ¼þ¼ÐÖÐ´´½¨ÎÄ¼þ
+					file.createNewFile();// ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 
 				} catch (Exception e) {
 				}
 			}
 			else {
-	        	if(file.length()>MAX_FILE_LENGTH) //»ñÈ¡ÎÄ¼þ´óÐ¡,µ¥Î»Îªbytes 
+	        	if(file.length()>MAX_FILE_LENGTH) //ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡,ï¿½ï¿½Î»Îªbytes 
 	        	filename=date+".txt";
 	        	file=new File(sDir,String.valueOf(filename)); 
 	        	 try { 
-	                  file.createNewFile(); //ÔÚÖ¸¶¨µÄÎÄ¼þ¼ÐÖÐ´´½¨ÎÄ¼þ 
+	                  file.createNewFile(); //ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ 
 	            } catch (Exception e) { 
 	            }
 	        }
