@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 
 		final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.content);
 		myhander = new MyHandler();
-		mythread = new MyThread();// ÊµÀı»¯
+		mythread = new MyThread();// å®ä¾‹åŒ–
 		ImageView button = (ImageView) findViewById(R.id.centerImage);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 					"WifiScanner is running!", Toast.LENGTH_SHORT).show();
 					isStart = true;
 					mythread.stop = false;
-					new Thread(mythread).start(); // ¿ªÆôÏß³Ì
+					new Thread(mythread).start(); // å¼€å¯çº¿ç¨‹
 				} else {
 					Toast.makeText(getApplicationContext(),
 					"WifiScanner stops!", Toast.LENGTH_SHORT).show();
@@ -86,16 +86,16 @@ public class MainActivity extends Activity {
 		public void handleMessage(Message msg) {
 			file_name_count++;
 			if (msg.what == -2) {
-				Toast.makeText(MainActivity.this, "Çë¼ì²éWifiÍøÂçµÄ×´Ì¬",
+				Toast.makeText(MainActivity.this, "è¯·æ£€æŸ¥WIFIç½‘ç»œçš„çŠ¶æ€×´Ì¬",
 						Toast.LENGTH_SHORT).show();
 			} else if (msg.what == -5) {
-				Toast.makeText(MainActivity.this, "WIFIÍøÂçÒÑ¹Ø±Õ",
+				Toast.makeText(MainActivity.this, "WIFIç½‘ç»œå·²å…³é—­",
 						Toast.LENGTH_SHORT).show();
-				// Ôö¼ÓÒ»¸ö¶Ô»°¿ò ÊÇ·ñÉèÖÃWIFIÍøÂç
+				// å¢åŠ ä¸€ä¸ªå¯¹è¯æ¡† æ˜¯å¦è®¾ç½®WIFIç½‘ç»œ
 				AlertDialog.Builder builder = new Builder(MainActivity.this);
-				builder.setMessage("È·ÈÏÉèÖÃÍøÂç");
-				builder.setTitle("ÌáÊ¾");
-				builder.setPositiveButton("È·ÈÏ",
+				builder.setMessage("ç¡®è®¤è®¾ç½®ç½‘ç»œ");
+				builder.setTitle("æç¤ºÊ¾");
+				builder.setPositiveButton("ç¡®è®¤",
 						new android.content.DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface arg0, int arg1) {
@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
 
 							}
 						});
-				builder.setNegativeButton("È¡Ïû",
+				builder.setNegativeButton("å–æ¶ˆ",
 						new android.content.DialogInterface.OnClickListener() {
 
 							@Override
@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
 						});
 				builder.create().show();
 			} else if (msg.what == -1) {
-				Toast.makeText(MainActivity.this, "WifiÍø¿¨²»¿ÉÓÃ",
+				Toast.makeText(MainActivity.this, "WIFIç½‘å¡ä¸å¯ç”¨",
 						Toast.LENGTH_SHORT).show();
 			} else {
 			}
@@ -141,12 +141,12 @@ public class MainActivity extends Activity {
 			while (!stop) {
 
 				try {
-					int result = wifi_s.WifiResult(wm);// ¶¨Ê±Ö´ĞĞÕâ¸öº¯Êı
+					int result = wifi_s.WifiResult(wm);// å®šæ—¶æ‰§è¡Œè¿™ä¸ªå‡½æ•°
 					Message message = new Message();
 					message.what=result;
-					myhander.sendMessage(message);// ·¢ËÍÊı¾İ
+					myhander.sendMessage(message);// å‘é€æ•°æ®
 					Thread.currentThread();
-					Thread.sleep(5000);// Ïß³ÌÃ¿¸ô5sÖ´ĞĞÒ»´Î
+					Thread.sleep(5000);// çº¿ç¨‹æ¯éš”5sæ‰§è¡Œä¸€æ¬¡
 				} catch (InterruptedException e) {
 					
 					e.printStackTrace();
