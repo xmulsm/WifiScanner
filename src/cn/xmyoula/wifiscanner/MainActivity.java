@@ -40,19 +40,21 @@ public class MainActivity extends Activity {
 		mythread = new MyThread();// 实例化
 		ImageView button = (ImageView) findViewById(R.id.centerImage);
 		button.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View view) {
 
 				if (!isStart) {
 					rippleBackground.startRippleAnimation();
 					Toast.makeText(getApplicationContext(),
-					"WifiScanner is running!", Toast.LENGTH_SHORT).show();
+							"WifiScanner is running!", Toast.LENGTH_SHORT)
+							.show();
 					isStart = true;
 					mythread.stop = false;
 					new Thread(mythread).start(); // 开启线程
 				} else {
 					Toast.makeText(getApplicationContext(),
-					"WifiScanner stops!", Toast.LENGTH_SHORT).show();
+							"WifiScanner stops!", Toast.LENGTH_SHORT).show();
 					rippleBackground.stopRippleAnimation();
 					mythread.stop = true;
 					isStart = false;
@@ -114,9 +116,6 @@ public class MainActivity extends Activity {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.dismiss();
-								//isStart = false;
-								// TODO Auto-generated method stub
-
 							}
 						});
 				builder.create().show();
@@ -129,7 +128,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	//public int pre_result=1;
+	// public int pre_result=1;
 	public class MyThread implements Runnable {
 		volatile boolean stop = false;
 		Wifi_Result wifi_s = new Wifi_Result();
@@ -143,12 +142,12 @@ public class MainActivity extends Activity {
 				try {
 					int result = wifi_s.WifiResult(wm);// 定时执行这个函数
 					Message message = new Message();
-					message.what=result;
+					message.what = result;
 					myhander.sendMessage(message);// 发送数据
 					Thread.currentThread();
 					Thread.sleep(5000);// 线程每隔5s执行一次
 				} catch (InterruptedException e) {
-					
+
 					e.printStackTrace();
 				}
 
